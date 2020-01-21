@@ -1,0 +1,60 @@
+@startuml
+
+!include default_style.iuml
+
+participant A
+participant B
+participant C
+participant D
+
+A->B: Synchronous message\n (A->B)
+
+activate C
+note right of C: (activate C)
+
+A->>B: Asynchronous message\n (A->>B)
+
+deactivate C
+note right of C: deactivate C
+
+A->B: Standard call, synchronous,\n explicit return needed,\n activates B\n (A->B; activate B)
+activate B
+B-->>A: Standard return, asynchronous,\n deactivates B\n (B-->>A; deactivate B)
+deactivate B
+
+destroy D
+note right of D: destroy D
+
+alt condition 1
+  note over A,B: Diagram for condition 1\n (alt cond 1 ... else cond 2 ... end)
+else condition 2
+  note over A,B: Diagram for condition 2
+end
+
+opt condition
+  note over A,B: Diagram\n if condition holds\n (opt condition ... end)
+end
+
+loop iteration description\n (eg. for each instance in a set)
+  note over A,B: Diagram\n to itereate\n (loop iteration description ... end)
+end
+
+note over A,B: Note over A and B\n (note over A, B: bla bla bla)
+
+note left of A: Note to the left of A\n (note left of A: bla bla bla)
+
+note right of A
+    This is a multiline text
+    to the right of A
+    (note right of A bla bla bla end)
+end note
+
+note right of B: Note to the left of B\n (note right of B: bla bla bla)
+
+note left of B
+    This is a multiline text
+    to the left of B
+    (note left of B bla bla bla end)
+end note
+
+@enduml

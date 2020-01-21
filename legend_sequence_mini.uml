@@ -1,0 +1,25 @@
+@startuml
+
+!include default_style.iuml
+
+title Plant UML Sequence Diagram Mini Legend
+
+participant A
+participant B
+
+A->B: Synchronous message
+
+A->>B: Asynchronous message
+
+A->B: Standard call, synchronous, explicit return needed
+activate B
+B-->>A: Standard return, asynchronous
+deactivate B
+
+alt condition 1
+  note over A,B: Diagram for condition 1
+else condition 2
+  note over A,B: Diagram for condition 2
+end
+
+@enduml

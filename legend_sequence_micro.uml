@@ -1,0 +1,13 @@
+@startuml
+
+!include default_style.iuml
+
+title Plant UML Sequence Diagram Micro Legend
+
+A -> B: synchronous request
+activate B
+B -->> A: response
+deactivate B
+A ->> B: asynchronous request
+
+@enduml

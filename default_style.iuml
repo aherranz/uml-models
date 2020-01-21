@@ -1,0 +1,4 @@
+'-----------------------------------------------------------------------
+' Default colors and fonts
+
+skinparam defaultFontName "DejaVu Sans Mono"

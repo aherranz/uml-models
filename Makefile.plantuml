@@ -1,0 +1,46 @@
+# -*- mode: makefile; -*-
+
+# Image extension (png, forced by plant uml)
+IMG_EXT = png
+
+# Image extension (uml, can be changed)
+UML_EXT ?= uml
+
+# List of UML files (dependencies)
+UML_FILES ?= $(wildcard *.$(UML_EXT))
+
+# List of image files (targets)
+IMG_FILES = $(patsubst %.$(UML_EXT),%.$(IMG_EXT),$(UML_FILES))
+
+# All existing image files
+EXISTING_IMG_FILES = $(wildcard *.$(IMG_EXT))
+
+# Obsolete existing image files (to be clean)
+OBSOLETE_IMG_FILES = $(filter-out $(IMG_FILES),$(EXISTING_IMG_FILES))
+
+# Default rule
+plant-all: $(IMG_FILES)
+
+# Rule to create an image target file from a UML dependency
+%.$(IMG_EXT): %.uml plantuml.jar
+	java -jar plantuml.jar $<
+
+# Rule to download PlantUML jar file
+plantuml.jar:
+	wget https://downloads.sourceforge.net/project/plantuml/plantuml.jar
+
+# Rule to download PlantUML documentation file
+PlantUML_Language_Reference_Guide_en.pdf:
+	wget http://pdf.plantuml.net/PlantUML_Language_Reference_Guide_en.pdf
+
+
+# Rule to clean obsolete files
+plant-clean:
+	if [ -n "$(OBSOLETE_IMG_FILES)" ]; then rm $(OBSOLETE_IMG_FILES); fi
+
+# Rule to clean up
+plant-veryclean: plant-clean
+	rm -f plantuml.jar PlantUML_Language_Reference_Guide.pdf
+
+# Targets that are not really files
+.PHONY: plant-all plant-clean plant-veryclean
