@@ -1,0 +1,48 @@
+@startuml
+
+skinparam defaultFontName "DejaVu Sans Mono"
+skinparam backgroundColor transparent
+skinparam defaultTextAlignment center
+
+rectangle "//SysML//\n//Diagram//" as diagram
+
+rectangle "//Behavior//\n//Diagram//" as behavior
+rectangle "Activity\nDiagram" as activity
+rectangle "Sequence\nDiagram" as sequence
+rectangle "State machine\nDiagram" as state
+rectangle "Use case\nDiagram" as usecase
+
+rectangle "Requirement\nDiagram" as requirement
+
+rectangle "//Structure//\n//Diagram//" as structure
+rectangle "Block Definition\nDiagram" as bdd
+rectangle "Internal Block\nDiagram" as ibd
+rectangle "Parametric\nDiagram" as param
+rectangle "Package\nDiagram" as package
+
+note bottom of activity: Modifica UML2\nActivity diagram\nEn el curso
+note bottom of sequence: UML2\nEn el curso
+note bottom of state: UML2\nEn el curso
+note bottom of usecase: UML2\nEn el curso
+note bottom of requirement: NEW
+note bottom of bdd: Modifica UML2\nClass diagram\nEn el curso
+note bottom of ibd: Modifica UML2\nComposite diagram\nEn el curso\n(Semántica similar a\nla de Class Diagram)
+note bottom of package: UML2
+note bottom of param: NEW
+
+diagram <|-- behavior
+behavior <|-- activity
+behavior <|-- sequence
+behavior <|-- state
+behavior <|-- usecase
+
+diagram <|-- requirement
+
+diagram <|-- structure
+structure <|-- bdd
+structure <|-- ibd
+structure <|-- package
+
+ibd <|-- param
+
+@enduml

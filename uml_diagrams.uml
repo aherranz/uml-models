@@ -1,0 +1,77 @@
+@startuml
+
+skinparam defaultFontName "DejaVu Sans Mono"
+skinparam backgroundColor transparent
+skinparam defaultTextAlignment center
+
+rectangle "//UML//\n//Diagram//" as diagram
+
+rectangle "//Structure//\n//Diagram//" as structure
+rectangle "Class\nDiagram" as class
+rectangle "Object\nDiagram" as object
+rectangle "Package\nDiagram" as package
+rectangle "Component\nDiagram" as component
+rectangle "Deployment\nDiagram" as deployment
+rectangle "Composite\nstructure\nDiagram" as composite
+
+rectangle "//Behavior//\n//Diagram//" as behavior
+rectangle "Activity\nDiagram" as activity
+rectangle "Use case\nDiagram" as usecase
+rectangle "State machine\nDiagram" as state
+
+rectangle "//Interaction//\n//Diagram//" as interaction
+rectangle "Timing\nDiagram" as timing
+rectangle "Sequence\nDiagram" as sequence
+rectangle "Communication\nDiagram" as communication
+rectangle "Interaction\noverview\nDiagram" as overview
+
+' remove diagram
+' remove structure
+' remove class
+' remove object
+' remove package
+' remove component
+' remove deployment
+' remove composite
+' remove behavior
+' remove interaction
+' remove activity
+' remove usecase
+' remove state
+' remove timing
+' remove sequence
+' remove communication
+' remove overview
+
+note bottom of class: En el curso
+note bottom of object: En el curso
+note bottom of composite: En el curso\nvia SysML\nIBD
+note bottom of activity: En el curso\nvia SysML
+note bottom of usecase: En el curso
+note bottom of state: En el curso
+note bottom of sequence: En el curso
+' note bottom of communication: (Semántica igual que\ndiagrama de secuencia)
+
+diagram <|-- structure
+
+structure <|-- class
+structure <|-- object
+structure <|-- package
+structure <|-- component
+structure <|-- deployment
+structure <|-- composite
+
+diagram <|-- behavior
+behavior <|-- activity
+behavior <|-- usecase
+behavior <|-- state
+behavior <|-- interaction
+
+interaction <|-- timing
+interaction <|-- sequence
+interaction <|-- communication
+interaction <|-- overview
+
+' structure -[hidden]- behavior
+
+@enduml
