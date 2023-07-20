@@ -1,0 +1,114 @@
+@startuml
+
+'-----------------------------------------------------------------------
+' Style
+
+!include default_style.iuml
+' Horizontal
+skinparam nodesep 0
+' Vertical
+skinparam ranksep 0
+
+' skinparam linetype ortho
+
+skinparam class {
+BackgroundColor Tomato
+BackgroundColor<<repo>> YellowGreen
+BackgroundColor<<???>> Orange
+BackgroundColor<<repo,???>> Gold
+}
+
+hide members
+
+'-----------------------------------------------------------------------
+
+package assets {
+entity Org
+entity AssetType <<repo>>
+entity Asset
+}
+
+package vulnerabilities {
+entity Vulnerability <<repo>>
+entity Threat <<repo>>
+entity Source <<repo>>
+entity SourceType <<repo>>
+entity "Incident\n(Attack)" as Attack <<???>>
+entity Exploit <<repo,???>>
+entity "Countermeasure\n(SecurityMeasure)" as Countermeasure <<repo,???>>
+entity "PenetrationTest" as Penetration <<repo,???>>
+Threat -[hidden] Exploit
+Exploit -[hidden]- Countermeasure
+Exploit -[hidden] Penetration
+}
+
+package assesments {
+entity Risk
+entity Assesment
+entity AssesmentType <<repo>>
+entity Dimension<<???>>
+entity Intervention<<???>>
+Dimension -[hidden]left- Intervention
+}
+
+package external {
+entity CVE <<repo>>
+note top of CVE
+Common Vulnerabilities
+and Exposures
+
+A list of publicly known
+vulnerabilities
+end note
+
+entity NVD<<repo>>
+note top of NVD
+National Vulnerability Database
+
+A repository of vulnerability
+management data used by the
+U.S. government and others.
+end note
+}
+
+CVE .. Vulnerability
+NVD .. Vulnerability
+Org "1" - "*" Asset: belongs_to <
+Asset "1" - "*" Asset: contains
+Asset "*" - "*" Asset: depends(?)
+Asset "*" -up- "1" AssetType: belongs_to >
+' Asset "*" .. "*" Vulnerability: presents >
+Asset "1" -- "*" Risk: has >
+Risk "*" -up- "1" Vulnerability: identified >
+Risk "1" -- "0..1" Assesment: evaluates <
+Assesment "*" -up- "1" AssesmentType: belongs_to >
+Assesment "*" -- "1" Dimension: ???
+Vulnerability "1..*" -- "*" Threat: exploits <
+Threat "*" -left- "*" Source: ???
+Source "*" -up- "1" SourceType: belongs_to >
+Threat "1..*" -- "*" Attack: implements <
+Intervention "*" - "1" Countermeasure: implements >
+
+'-----------------------------------------------------------------------
+legend right
+
+**Notes:**
+  - <<repo>> stereotype represents repositories with information that is
+    **preloaded**, extracted from **public databases**, information that
+    use to be **immutable**
+  - Temporal information will be important in particular if we capture
+    intervention and counter-measures information (**difficult**)
+
+**Doubts**
+
+  - <<???>> stereotype represents doubts
+  - What's Dimension?
+  - What's Incident? is it a concrete attack?
+  - How are **theats and exploits** related? are they the same thing?
+  - Is the **counter-measures related to vulnerabilities or with
+    threats**?
+  - Penetration tests would relate to risks, counter-measures and
+    interventions in order to assess the effectiveness of an intervention
+end legend
+
+@enduml
