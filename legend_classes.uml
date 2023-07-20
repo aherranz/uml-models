@@ -1,0 +1,149 @@
+@startuml
+
+!include default_style.iuml
+
+title UML Class diagram and object diagram explained
+
+'-----------------------------------------------------------------------
+' Display configuration
+
+' hide members
+hide methods
+
+'-----------------------------------------------------------------------
+' Classes
+package "Conceptual data model (class diagram)" {
+
+class Users {
+  id : string
+  username: string
+  ...
+}
+
+note top of Users #orange
+- **Attributes** can be described
+  **in your preferred type language**
+  (eg. SQL, PHP, Java, C++, etc.).
+  Just copy and paste your defined
+  types from your **source code**
+  (a bit **informal but very useful**)
+end note
+
+abstract class Contents
+note top of Contents #orange
+- Any instance of an abstract class
+  **is an instance of one of its**
+  **subclasses**
+end note
+
+class JobOffers {
+  id : string
+  ...
+}
+
+class Posts {
+  id : string
+  ...
+}
+
+class Publications {
+  id : string
+  ...
+}
+
+'-----------------------------------------------------------------------
+' Associations
+
+Contents <|-- JobOffers
+Contents <|-- Posts
+
+Users "1" *- "authorOf\r*" Contents: createdBy <
+note top on link #orange
+- The **association name** can
+  always be used **as a role** in
+  involved classes
+- The meaning of decorating an
+  association with a **triangle** is
+  to use its **name as a role** in
+  the indicated **orientation** (eg.
+  p2.publisher, post2.createdBy...)
+end note
+
+Contents "1" -- "publishedIn\l0..1" Publications : content <
+note right on link #orange
+- An extra role has been included to
+  illustrate the use of roles
+  (eg. publishedIn)
+- **Roles used to indicate** the name of
+  the **artifacts in concrete**
+  **implementations** (tables relational
+  model; sets, hashes, indices in NoSQL
+  models, etc.)
+end note
+
+Users "1" *-- "publications\l*" Publications : publisher <
+note right on link #orange
+- The meaning of **composition**
+  (represented with a **filled diamond**)
+  is that any instance must be a
+  **component of only one owner**
+  (even under multiple classes of
+  potential owners).
+- Aliases for multiplicities:
+  **1 = 1..1**, *** = 0..***
+- In this diagrams **aggregation**
+  (**unfilled diamond**) is not used
+  since it has no formal semantics
+  ("Think of it as a modeling placebo"
+  [Rumbaugh, UML Reference]).
+end note
+
+note as publisher_implementation
+Example indicating implementations:
+- Publication:publisher implemented as
+  a property in a hash in Redis
+- Users:publications implemented as
+  a set in Redis
+- Publication:publisher implemented as
+  not null column in table *publications*
+- Users:publications implemented as
+  a SQL view inspecting table
+  *publications*
+end note
+
+Users .. publisher_implementation
+publisher_implementation . Publications
+
+}
+
+
+'-----------------------------------------------------------------------
+legend right
+
+- Aggregation (represented with a blank diamond) is not used since
+  it is **strictly meaningless** (as Martin Fowler says in UML
+  Distilled).
+' - The meaning of composition (represented with a filled diamond) is that
+'   any instance must be a component of only one owner (even under multiple
+'   classes of potential owners).
+' - Aliases for multiplicities: 1 = 1..1, * = 0..*
+' - Expressions {...} represents (mathematical) sets (no arrays, no
+'   tuples, no hashes, no artifacts in any physical or logical model)
+' - The name of the association can always be used as a role
+'   in classes involved in the association
+' - The meaning of decorating an association with a triangle is to use its
+'   name as a role in the indicated orientation  (eg. p2.publisher,
+'   post2.createdBy...)
+' - An extra role has been included to illustrate the use of roles
+' - Roles used to indicates the name of the artifacts in concrete
+'   implementations (tables relational model, sets or hashed in NoSQL
+'   models, etc.)
+' - Roles and attributes follow the same syntax
+' - Attributes can be described in your preferred type language (eg. SQL,
+'   PHP, Java, C++, etc.). Just copy and paste your defined types from
+'   your source code (a bit informal but very useful)
+' - When relevant, you can add attribute values in class instances
+
+end legend
+
+@enduml
