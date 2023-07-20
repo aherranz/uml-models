@@ -1,0 +1,46 @@
+@startuml
+
+'-----------------------------------------------------------------------
+' Style
+
+!include default_style.iuml
+
+hide methods
+
+'-----------------------------------------------------------------------
+
+entity Products {
+        id : uuid {id}
+        name : string
+        current_price : decimal
+}
+
+entity Customers {
+        dni : string {id}
+        name : string
+        address : string
+        email : string
+        phone : string [0..1]
+}
+
+entity Receipts {
+        num : integer {id}
+        date : date
+        discount : decimal
+        actual_vat : decimal
+}
+
+entity ItemInfo {
+        quantity : integer
+        actual_price : decimal
+        discount : decimal
+}
+
+Customers "1" -- "*" Receipts
+Receipts "*" - "*" Products
+(Receipts, Products) .. ItemInfo
+note on link
+{ordered}
+end note
+
+@enduml
