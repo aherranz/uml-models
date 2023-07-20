@@ -1,0 +1,53 @@
+@startuml
+
+!include default_style.iuml
+skinparam backgroundColor transparent
+
+' title UML Activity Diagrama for Phoenix LiveComponent LifeCycle
+
+start
+
+:live_component(assigns) in a parent LiveView
+(live component run inside the LiveView process);
+
+if (multiple components of the same type on the parent LiveView) then (yes)
+  :preload(list_of_assigns)
+  /list_of_assigns;
+endif
+
+:mount(socket)
+/{:ok, socket, keyword};
+
+:update(assigns, socket)
+/{:ok, socket};
+
+:render(socket.assigns)
+/template;
+
+:Sent HTML to client>
+
+repeat
+
+fork
+  :Parent LiveView rerendered;
+  if (multiple components of the same type on the parent LiveView) then (yes)
+    :preload(list_of_assigns)
+    /list_of_assigns;
+  endif
+
+  :update(assigns, socket)
+  /{:ok, socket};
+fork again
+  :phx- event<
+  :handle_event(event, event_params, socket)
+  /{:noreply, socket} | {:reply, map, socket};
+end fork
+
+:render(socket.assigns)
+/template;
+
+:Send changes to client>
+
+repeat while ()
+
+@enduml

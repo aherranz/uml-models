@@ -1,0 +1,61 @@
+@startuml
+
+!include default_style.iuml
+skinparam backgroundColor transparent
+
+' title UML Activity Diagrama for Phoenix LiveView LifeCycle
+
+start
+
+:mount(params, session, socket)
+/{:ok, socket, keyword};
+
+:handle_params(params, uri, socket)
+/{:noreply, socket, keyword};
+
+:render(socket.assigns)
+/template;
+
+:Sent HTML to client>
+
+:Connects from the client to the server where stateful views
+are spawned to push rendered updates to the browser,
+and receive client events via phx- bindings;
+
+repeat
+
+fork
+  :phx- event<
+  :handle_event(event, event_params, socket)
+  /{:noreply, socket} | {:reply, map, socket};
+fork again
+  :Erlang msg<
+  :handle_info(msg, socket)
+  /{:ok, socket};
+fork again
+  :GenServer call<
+  :handle_call(msg, {pid, ref}, socket)
+  /{:noreply, socket} | {:reply, term, socket};
+fork again
+  :GenServer cast<
+  :handle_cast(msg, socket)
+  /{:noreply, socket};
+fork again
+  : <.link patch={...}> <
+  :handle_params(params, uri, socket)
+  /{:noreply, socket, keyword};
+end fork
+
+if (socket anotated for "patch" navigation) then (yes)
+  :handle_params(params, uri, socket)
+  /{:noreply, socket, keyword};
+endif
+
+:render(socket.assigns)
+/template;
+
+:Send changes to client>
+
+repeat while ()
+
+@enduml
