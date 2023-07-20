@@ -1,0 +1,63 @@
+@startuml
+
+' title Patrones MVC
+
+'-----------------------------------------------------------------------
+' Colors and fonts
+
+' skinparam defaultFontName "DejaVu Sans Mono"
+
+hide members
+
+'-----------------------------------------------------------------------
+
+package "MVC (1970s)" {
+        class "Model" as mvc_m
+        class "View" as mvc_v
+        class "Controller" as mvc_c
+
+        mvc_c ..> mvc_v: update\nui
+        mvc_c <.. mvc_v: notify\nuser\nactions
+
+        mvc_m <. mvc_v: consult the model
+
+        mvc_c ..> mvc_m: update\nmodel
+        mvc_c <.. mvc_m: notify\nchanges
+}
+
+package "MVP" {
+        class "Model" as mvp_m
+        class "View" as mvp_v
+        class "Presenter" as mvp_p
+
+        mvp_p ..> mvp_v: update\nui
+        mvp_p <.. mvp_v: notify\nuser\nactions
+
+        mvp_m -[hidden] mvp_v: there is no association
+
+        mvp_p ..> mvp_m: update\nmodel
+        mvp_p <.. mvp_m: notify\nchanges
+}
+
+package "MVVM" {
+        class "Model" as mvvm_m
+        class "View" as mvvm_v
+        class "ViewModel" as mvvm_vm
+
+        mvvm_vm .. mvvm_v: databinding\ntechnology\n
+
+        mvvm_m -[hidden] mvvm_v: there is no association
+
+        mvvm_vm ..> mvvm_m: update\nmodel
+        mvvm_vm <.. mvvm_m: notify\nchanges
+}
+
+
+'-----------------------------------------------------------------------
+legend right
+        **Notes:**
+        - In all cases "the Model" is a **set of classes** responsible of the business logic
+        - **Arrows** talk about **navigation**, not necessarily about information flow
+end legend
+
+@enduml
