@@ -22,7 +22,7 @@ OBSOLETE_IMG_FILES = $(filter-out $(IMG_FILES),$(EXISTING_IMG_FILES))
 plant-all: $(IMG_FILES)
 
 # Rule to create an image target file from a UML dependency
-%.$(IMG_EXT): %.uml plantuml.jar
+%.$(IMG_EXT): %.$(UML_EXT) plantuml.jar
 	java -jar plantuml.jar $<
 
 # Rule to download PlantUML jar file

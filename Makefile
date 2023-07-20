@@ -1,5 +1,3 @@
-default: plant-all
-
 help:
 	@echo make all
 	@echo make doc
