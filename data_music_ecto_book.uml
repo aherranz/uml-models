@@ -1,0 +1,42 @@
+@startuml
+
+'-----------------------------------------------------------------------
+' Style
+
+!include default_style.iuml
+
+skinparam backgroundColor transparent
+
+hide methods
+
+'-----------------------------------------------------------------------
+
+' title E/R model for data model in the Ecto Book
+
+entity Albums {
+        id : uuid {id}
+        title : string
+        released : date
+}
+
+entity Artists {
+        id : uuid {id}
+        name : string {unique}
+}
+
+entity Tracks {
+        id : uuid {id}
+        title : string
+}
+
+entity Genres {
+        id : uuid {id}
+        name : string {unique}
+}
+
+
+Albums "1" -- "*\r{ordered}" Tracks: contained <
+Albums "*" -- "*" Genres: covered <
+Albums "*" -left- "1" Artists: released <
+Artists "*" -- "*" Tracks: featured_by <
+@enduml
