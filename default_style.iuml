@@ -1,4 +1,15 @@
 '-----------------------------------------------------------------------
-' Default colors and fonts
+' Skin params
 
-skinparam defaultFontName "DejaVu Sans Mono"
+' Colors
+' skinparam backgroundColor transparent
+
+' Font
+skinparam defaultFontSize 12
+skinparam defaultFontName "Helvetia Neue"
+
+' Spacing
+' Horizontal
+skinparam nodesep 100
+' Vertical
+skinparam ranksep 100
