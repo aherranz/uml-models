@@ -1,0 +1,48 @@
+@startuml
+
+!include default_style.iuml
+
+participant Client
+participant Document
+participant Auth
+
+Client -> Auth: reg(user, pass)
+activate Auth
+        Auth -> Auth: register user "user"\nwith password "pass"
+        Auth -->> Client: :ok
+deactivate Auth
+
+Client -> Auth: gen(user, pass)
+activate Auth
+        Auth -> Auth: generates a token "token"\nfor user "user"\nand stores it
+        Auth -->> Client: {:ok, token}
+deactivate Auth
+
+Client -> Document: put(token, key, doc)
+activate Document
+        Document -> Auth: val(token)
+        activate Auth
+                Auth -> Auth: searches and finds user\nof token "token"
+                Auth -->> Document: {:ok, user}
+        deactivate Auth
+        Document -> Document: stores document "doc" \nwith key "key"
+        Document -->> Client: :ok
+deactivate Document
+
+Client -> Auth: rev(token)
+activate Auth
+        Auth -> Auth: removes token "token"
+        Auth -->> Client: :ok
+deactivate Auth
+
+Client -> Document: put(token, key, doc)
+activate Document
+        Document -> Auth: val(token)
+        activate Auth
+                Auth -> Auth: searches and\ndoes not find token "token"
+                Auth -->> Document: :error
+        deactivate Auth
+        Document -->> Client: :error
+deactivate Document
+
+@enduml
