@@ -1,0 +1,19 @@
+@startuml
+
+(*) --> "Usuario selecciona producto"
+if "Producto seleccionado disponible?" then
+  -->[Sí] "Usuario inserta dinero"
+  if "Dinero suficiente?" then
+    -->[Sí] "Producto dispensado"
+  else
+    -->[No] "Usuario agrega más dinero"
+    --> "Dinero suficiente?"
+  endif
+else
+  -->[No] "Producto no disponible"
+  --> "Compra cancelada"
+endif
+
+--> "Usuario retira producto"
+
+@enduml
