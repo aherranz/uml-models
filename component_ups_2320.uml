@@ -1,0 +1,119 @@
+@startuml
+
+' skinparam backgroundColor transparent
+
+component "Cuadro en la pared\ncon enchufes" as cuadro
+interface "Enchufe\nnormal" as enchufe1
+interface "Enchufe\nnormal" as enchufe2
+' interface "Enchufe\nnormal" as enchufe3
+' interface "Enchufe\nnormal" as enchufe4
+interface "Ethernet\nRJ45" as ethernet
+enchufe1 -- cuadro
+enchufe2 -- cuadro
+' enchufe3 -- cuadro
+' enchufe4 -- cuadro
+ethernet -- cuadro
+
+package UPSs {
+component "UPS Roja\n(Salicru)" as salicru
+interface "Botón on/off" as boton_salicru
+interface "Enchufe\nnormal" as salicru1
+' interface "Enchufe\nnormal" as salicru2
+boton_salicru -- salicru
+salicru1 -- salicru
+' salicru2 -- salicru
+
+component "UPS Negra\n(APC)" as apc
+interface "Botón on/off" as boton_apc
+interface "Enchufe compatible con\nfuente de alimentación" as apc1
+' interface "Enchufe compatible con\nfuente de alimentación" as apc2
+' interface "Enchufe compatible con\nfuente de alimentación" as apc3
+' interface "Enchufe compatible con\nfuente de alimentación" as apc4
+boton_apc -- apc
+apc1 -- apc
+' apc2 -- apc
+' apc3 -- apc
+' apc4 -- apc
+}
+
+package Regletas {
+component "Regleta\nSUPERIOR" as superior
+interface "Interruptor on/off" as interruptor_superior
+interface "Enchufe\nnormal" as superior1
+interface "Enchufe\nnormal" as superior2
+interface "Enchufe\nnormal" as superior3
+interface "Enchufe\nnormal" as superior4
+interface "Enchufe\nnormal" as superior5
+interruptor_superior -- superior
+superior1 -- superior
+superior2 -- superior
+superior3 -- superior
+superior4 -- superior
+superior5 -- superior
+
+component "Regleta\nINFERIOR" as inferior
+interface "Interruptor on/off" as interruptor_inferior
+interface "Enchufe\nnormal" as inferior1
+interface "Enchufe\nnormal" as inferior2
+interface "Enchufe\nnormal" as inferior3
+interface "Enchufe\nnormal" as inferior4
+interface "Enchufe\nnormal" as inferior5
+interruptor_inferior -- inferior
+inferior1 -- inferior
+inferior2 -- inferior
+inferior3 -- inferior
+inferior4 -- inferior
+inferior5 -- inferior
+}
+
+package Equipos {
+component "Deliverit" as deliverit
+interface "Interruptor on/off" as interruptor_deliverit
+interruptor_deliverit -- deliverit
+
+component "Babel" as babel
+interface "Interruptor on/off" as interruptor_babel
+interruptor_babel -- babel
+
+component "Tedeco" as tedeco
+interface "Interruptor on/off" as interruptor_tedeco
+interruptor_tedeco -- tedeco
+
+component "Monitor" as monitor
+interface "Interruptor on/off" as interruptor_monitor
+interruptor_monitor -- monitor
+
+component "Multiconsola" as consola
+
+component "NASS" as nass
+
+component "HUB Ethernet" as hub
+interface "Ethernet\nRJ45" as hub1
+interface "Ethernet\nRJ45" as hub2
+interface "Ethernet\nRJ45" as hub3
+interface "Ethernet\nRJ45" as hub4
+hub1 -- hub
+hub2 -- hub
+hub3 -- hub
+hub4 -- hub
+
+component "Ventiladores\nsuperiores del RAC" as ventiladores
+}
+
+salicru --> enchufe1
+
+apc --> enchufe2
+
+superior --> salicru1: "cable adaptador\nenchufe-fuente"
+inferior --> apc1
+
+deliverit --> superior1
+
+babel --> superior2 : Fuente1
+babel --> superior3 : Fuente2
+
+tedeco --> inferior2 : Fuente1
+tedeco --> inferior3 : Fuente2
+
+
+@enduml
