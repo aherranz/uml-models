@@ -1,0 +1,28 @@
+@startgantt
+language ES
+Project starts 2023-10-09
+
+[Estudiar el estado del arte] lasts 18 days
+[Documentar el estado del arte] lasts 18 days
+[Diseñar un API elegante] lasts 18 days
+
+[Adaptar ejemplos al API] lasts 19 days
+[Revisar el diseño del API] lasts 19 days
+[Documentar el diseño del API y ejemplos] lasts 19 days
+
+[Implementar pruebas contra el API diseñado] lasts 30 days
+[Implementar el API] lasts 30 days
+
+[Realizar las pruebas y corregir errores] lasts 23 days
+[Documentar el TFG] lasts 23 days
+
+[Diseñar un API elegante] -> [Adaptar ejemplos al API]
+[Diseñar un API elegante] -> [Revisar el diseño del API]
+[Diseñar un API elegante] -> [Documentar el diseño del API y ejemplos]
+
+[Documentar el diseño del API y ejemplos] -> [Implementar pruebas contra el API diseñado]
+[Documentar el diseño del API y ejemplos] -> [Implementar el API]
+
+[Implementar el API] -> [Realizar las pruebas y corregir errores]
+[Implementar el API] -> [Documentar el TFG]
+@endgantt
