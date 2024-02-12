@@ -1,0 +1,23 @@
+@startuml
+
+left to right direction
+
+actor "Usuario" as User
+actor "Personal de Mantenimiento" as Maintenance
+actor "Operador de la Máquina" as Operator
+actor "Personal de Asistencia Técnica" as TechSupport
+
+rectangle "Máquina Expendedora" {
+  User --> (Compra de Producto)
+  Maintenance --> (Reabastecimiento de Inventario)
+  Maintenance --> (Mantenimiento Preventivo)
+  Operator --> (Gestión de Inventarios)
+  Operator --> (Informes de Ventas)
+  TechSupport --> (Asistencia Técnica)
+  Operator --> (Actualización de Precios)
+  User --> (Resolución de Problemas de Pago)
+  Maintenance --> (Recarga de Cambio)
+  User --> (Cambio de Monedas)
+}
+
+@enduml
