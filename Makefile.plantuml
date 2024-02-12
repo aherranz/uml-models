@@ -27,7 +27,7 @@ plant-all: $(IMG_FILES)
 
 # Rule to download PlantUML jar file
 plantuml.jar:
-	wget https://downloads.sourceforge.net/project/plantuml/plantuml.jar
+	wget -O $@ https://github.com/plantuml/plantuml/releases/download/v1.2023.10/plantuml-1.2023.10.jar
 
 # Rule to download PlantUML documentation file
 PlantUML_Language_Reference_Guide_en.pdf:
