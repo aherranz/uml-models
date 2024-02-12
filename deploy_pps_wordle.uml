@@ -1,0 +1,51 @@
+@startuml
+
+!define COLOR_ENTREGAR 98FB98
+!define COLOR_EDITABLE FFFFE0
+!define COLOR_NOCAMBIAR FFB6C1
+
+folder pps_wordle {
+
+folder lib {
+  artifact libwordle.so #COLOR_NOCAMBIAR
+  folder include {
+    artifact wordle_dict.h #COLOR_NOCAMBIAR
+    artifact libwordle.h #COLOR_NOCAMBIAR
+  }
+  libwordle.so ..> wordle_dict.h: include\n(funciones\nexternas\nrequeridas)
+}
+
+folder src {
+  artifact wordle.c #COLOR_EDITABLE
+  artifact pps_iniciar.c #COLOR_ENTREGAR
+  artifact pps_iniciar.h #COLOR_NOCAMBIAR
+  pps_iniciar.c .left.> pps_iniciar.h: include
+  artifact test_dicc.c #COLOR_EDITABLE
+  artifact test_dicc.h #COLOR_NOCAMBIAR
+  test_dicc.c .left.> test_dicc.h: include
+  artifact pps_dicc.c #COLOR_ENTREGAR
+  wordle.c --> pps_iniciar.c: invoca\niniciar
+  wordle.c ..> pps_iniciar.h: include
+  pps_iniciar.c --> test_dicc.c: invoca\ntestear_dicc
+  pps_iniciar.c ..> test_dicc.h: include
+  test_dicc.c --> pps_dicc.c: invoca funciones\nde wordle_dict.h
+}
+
+pps_dicc.c ..> wordle_dict.h: include
+test_dicc.c ..> wordle_dict.h: include
+
+libwordle.so -up-> pps_dicc.c: invoca funciones\nde wordle_dict.h
+
+pps_iniciar.c --> libwordle.so: invoca\njugar_wordle
+pps_iniciar.c ..> libwordle.h: include
+
+card "A entregar" as a #COLOR_ENTREGAR
+card "Se puede cambiar\n(no recomendado)" as b #COLOR_EDITABLE
+card "No tocar" as c #COLOR_NOCAMBIAR
+a -[hidden] b
+b -[hidden] c
+b -[hidden]- wordle.c
+
+}
+
+@enduml
