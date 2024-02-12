@@ -36,7 +36,13 @@ entity Genres {
 
 
 Albums "1" -- "*\r{ordered}" Tracks: contained <
+note bottom on link: N:1\nordered
 Albums "*" -- "*" Genres: covered <
+note bottom on link: N:N
 Albums "*" -left- "1" Artists: released <
-Artists "*" -- "*" Tracks: featured_by <
+note top on link: N:1
+Artists "*" -- "*" Tracks: performed_by <
+note bottom on link: Derived from\nreleased and\ncontained\n(through)
+Artists "*" -- "*" Tracks: featuring <
+note bottom on link: Just a\nparticipation
 @enduml
