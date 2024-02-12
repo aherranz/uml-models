@@ -1,0 +1,88 @@
+@startuml
+
+skinparam backgroundColor transparent
+
+nwdiag {
+        user_internet [shape = actor, description = "User"];
+        laptop_internet [description = "<&laptop*5>\nLaptop"]
+        internet [description = "The Internet\n(eduroam, wifi en casa, ...)", shape = cloud]
+        disconnected [description = "<&x*5>\nFirewall"]
+
+        user_internet -- laptop_internet;
+        laptop_internet -- internet;
+        internet -- disconnected;
+
+        user_virtual [shape = actor, description = "User"];
+        laptop_virtual [description = "<&laptop*5>\nLaptop"]        
+        internet_virtual [description = "The Internet\n(eduroam, wifi en casa, ...)", shape = cloud]
+        virtual [description = "<&hard-drive*5>\n\nEscritorio\nvirtual"]
+
+        user_virtual -- laptop_virtual;
+        laptop_virtual -- internet_virtual;
+        internet_virtual -- virtual;
+        
+        user_vpn [shape = actor, description = "User"];
+        laptop_vpn [description = "<&laptop*5>\nLaptop"]
+        vpn [shape = cloud; description = "VPN (FI o UPM)"];
+
+        user_vpn -- laptop_vpn;
+        laptop_vpn -- vpn;
+
+        /'
+         ' user_lan [shape = actor, description = "User"];
+         ' laptop_lan [description = "<&laptop*5>\nLaptop"]
+         ' lan [description = "LAN @ FI\ncable ethernet", shape = cloud]
+         ' 
+         ' user_lan -- laptop_lan;
+         ' laptop_lan -- lan;
+         '/
+
+        group {
+                color = "#dc3545"
+                user_internet;
+                laptop_internet;
+                internet;
+                disconnected;
+        }
+        
+        group {
+                color = "#ffc107"
+                user_virtual;
+                laptop_virtual;
+                internet_virtual;
+                virtual;
+        }
+        
+        group {
+                color = "#28a745";
+                user_vpn;
+                laptop_vpn;
+                vpn;
+        }
+        
+        /'
+         ' group {
+         '         color = "#ffc107"
+         '         user_lan;
+         '         laptop_lan;
+         '         lan;
+         ' }
+         '/
+        
+        network intranet {
+                description = "**Intranet @ FI**";
+                virtual;
+                ' disconnected;
+                ' lan;
+                vpn;
+                group {
+                       color = "#007bff";
+                       triqui1.fi.upm.es;
+                       triqui2.fi.upm.es;
+                       triqui3.fi.upm.es;
+                       triqui4.fi.upm.es;
+                }
+        }
+}
+
+@enduml
