@@ -90,25 +90,27 @@ Threat "1..*" -- "*" Attack: implements <
 Intervention "*" - "1" Countermeasure: implements >
 
 '-----------------------------------------------------------------------
-legend right
-
-**Notes:**
-  - <<repo>> stereotype represents repositories with information that is
-    **preloaded**, extracted from **public databases**, information that
-    use to be **immutable**
-  - Temporal information will be important in particular if we capture
-    intervention and counter-measures information (**difficult**)
-
-**Doubts**
-
-  - <<???>> stereotype represents doubts
-  - What's Dimension?
-  - What's Incident? is it a concrete attack?
-  - How are **theats and exploits** related? are they the same thing?
-  - Is the **counter-measures related to vulnerabilities or with
-    threats**?
-  - Penetration tests would relate to risks, counter-measures and
-    interventions in order to assess the effectiveness of an intervention
-end legend
+/'
+ ' legend right
+ ' 
+ ' **Notes:**
+ '   - <<repo>> stereotype represents repositories with information that is
+ '     **preloaded**, extracted from **public databases**, information that
+ '     use to be **immutable**
+ '   - Temporal information will be important in particular if we capture
+ '     intervention and counter-measures information (**difficult**)
+ ' 
+ ' **Doubts**
+ ' 
+ '   - <<???>> stereotype represents doubts
+ '   - What's Dimension?
+ '   - What's Incident? is it a concrete attack?
+ '   - How are **theats and exploits** related? are they the same thing?
+ '   - Is the **counter-measures related to vulnerabilities or with
+ '     threats**?
+ '   - Penetration tests would relate to risks, counter-measures and
+ '     interventions in order to assess the effectiveness of an intervention
+ ' end legend
+ '/
 
 @enduml
