@@ -1,11 +1,13 @@
 @startuml
 
 !include default_style.iuml
-skinparam backgroundColor transparent
+' skinparam backgroundColor transparent
 
 ' title UML Activity Diagrama for Phoenix LiveView LifeCycle
 
 start
+
+repeat
 
 :mount(params, session, socket)
 /{:ok, socket, keyword};
@@ -18,9 +20,17 @@ start
 
 :Sent HTML to client>
 
-:Connects from the client to the server where stateful views
-are spawned to push rendered updates to the browser,
-and receive client events via phx- bindings;
+if (connected?(socket)) then (yes)
+  break;
+endif
+
+:Client connects to the liveSocket<
+
+:LiveView is spawned to receive messages;
+
+repeat while ()
+        
+  ' :Connects from the client to the server where stateful views are spawned to push rendered updates to the browser, and receive client events via phx- bindings;
 
 repeat
 
