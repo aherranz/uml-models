@@ -1,0 +1,75 @@
+@startuml
+
+!pragma teoz true
+
+participant A1
+participant A2
+participant c1
+participant c2
+participant B
+
+activate A1
+activate A2
+activate B
+
+A1 -\ c1: send_started(A1,c1)
+deactivate A1
+
+A2 -\ c1: send_started(A2,c1)
+deactivate A2
+
+c1 -\ B: receive_started(B2,c1)
+deactivate B
+
+A1 -> c1
+& c1 -> B : synchronized(A1,c1,B)
+activate A1
+activate B
+
+c1 -\ B: receive_started(B2,c1)
+deactivate B
+
+A2 -> c1
+& c1 -> B : synchronized(A2,c1,B)
+activate A2
+activate B
+
+c1 -\ B: receive_started(B2,c1)
+deactivate B
+
+A1 -\ c1: send_started(A1,c1)
+deactivate A1
+
+A1 -> c1
+& c1 -> B : synchronized(A1,c1,B)
+activate A1
+activate B
+
+A1 -\ c1: send_started(A1,c1)
+deactivate A1
+
+A2 -\ c2: send_started(A2,c2)
+deactivate A2
+
+c1 o-\ B
+& c2 o-\ B: select_started(B2,[c1,c2])
+deactivate B
+
+A2 -> c2
+& c2 -> B : synchronized(A2,c2,B)
+activate A2
+activate B
+
+c1 o-\ B
+& c2 o-\ B: select_started(B2,[c1,c2])
+deactivate B
+
+A1 -> c1
+& c1 -> B : synchronized(A1,c1,B)
+activate A1
+activate B
+
+
+
+
+@enduml
