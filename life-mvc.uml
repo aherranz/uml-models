@@ -1,0 +1,28 @@
+@startuml
+
+!include life-classes.uml
+
+' title Conway's Game of Life: MVC
+
+skinparam nodesep 100
+skinparam ranksep 50
+
+hide empty members
+
+remove In
+remove Draw
+remove DrawListener
+remove Life
+remove Gen
+
+LifeView "*" --> "model\r1" LifeHistory
+
+LifeView "1" -> "listener\r1" LifeViewListener
+
+LifeViewListener <|-- LifeController: implements
+
+LifeController "*" -left-> "model\l1" LifeHistory
+
+LifeController "1" -up-> "view\r1" LifeView
+
+@enduml

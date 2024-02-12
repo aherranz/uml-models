@@ -1,0 +1,86 @@
+@startuml
+
+'-----------------------------------------------------------------------
+' Colors and fonts
+
+skinparam defaultFontName "DejaVu Sans Mono"
+
+'-----------------------------------------------------------------------
+
+class Life {
+  -{static} readConfig(filename: string): Gen
+  +{static} main(args: string[*]): void
+}
+
+class Gen {
+  +Gen(size: int)
+  +next(): Gen
+  +size(): int
+  +live(x: int, y: int): boolean
+  +set(x:int, y: int, live: boolean): void
+}
+
+class LifeHistory {
+  +LifeHistory(pattern: Gen)
+  +evolve(): void
+  +undo(): void
+  +current(): Gen
+  +endOfGame(): boolean
+}
+
+class LifeView {
+  +LifeView(h: LifeHistory)
+  +setListener(l: LifeViewListener): void
+  +updateShowPaused(show: boolean): void
+  +update(): void
+}
+
+class LifeController {
+  +LifeController(h: LifeHistory, v: LifeView)
+  +tick(): void
+}
+
+interface LifeViewListener {
+  +pause(): void
+  +resume(): void
+  +step(): void
+  +undo(): void
+  +quit(): void
+}
+
+package stdlib {
+  class Draw {
+    +Draw(title: string)
+    +addListener(l: DrawListener): void
+    +enableDoubleBuffering(): void
+    +clear(): void
+    +setPenColor(color: int): void
+    +filledSquare(x: double, y: double, h: double): void
+    +square(x: double, y: double, h: double): void
+    +text(x: double, y: double, t: string): void
+    +textRight(x: double, y: double, t: string): void
+    +show(): void
+  }
+
+  class In {
+    +In(filename: string)
+    +readInt(): int
+    +readAllInts(): int[*]
+    ...
+  }
+
+  interface DrawListener {
+    +keyTyped(c: char c): void
+    +mousePressed(x: double, y: double): void
+    +mouseDragged(x: double, y: double): void
+    +mouseReleased(x: double, y: double): void
+    +mouseClicked(x: double, y: double): void
+    +keyPressed(keycode: int): void
+    +keyReleased(keycode: int): void
+  }
+}
+
+' Life .left.> In: use
+' LifeView -left- Draw
+
+@enduml
