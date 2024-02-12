@@ -1,0 +1,23 @@
+@startuml
+
+skinparam backgroundColor transparent
+
+actor "User" as user
+component "Laptop" as laptop
+
+interface "HTTP" as http
+component "Escritorio\nVirtual" as virtual
+http - virtual
+
+interface "Servidor SSH" as sshd
+component "triqui3.fi.upm.es" as triqui
+sshd -- triqui
+
+user ..> laptop: Usa
+
+laptop ..> sshd: Cliente SSH\nSobre VPN
+laptop .> http: Navegador
+
+virtual ..> sshd: SSH Client
+
+@enduml
